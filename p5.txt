@@ -42,7 +42,7 @@ correspondiente al protocolo TCP y UDP.
 de una aplicación que transmite en tiempo real?
     Es mucho mayor el tráfico de UDP, con un 96.2%, frente a un 2.1% de TCP,    esto tiene sentido precisamente por ser una transmisión en tiempo real, debido a que en RTP usamos UDP en su mayoría, ya que preferimos enviar todo de manera no fiable, ya que no queremos estar reenviando paquetes que no lleguen de primeras.
 * ¿Qué otros protocolos podemos ver en la jerarquı́a de protocolos?
-    Hay más protocolos (algunos englobados en UDP y TCP), como SIP, DNS, RTP, RTCP, HTP, ICMP, ARP, IPv4, SDP
+    Hay más protocolos (algunos englobados en UDP y TCP), como SIP, DNS, RTP, RTCP, HTP, ICMP, ARP, IPv4, SDP, STUN
 ¿Cuales crees que son señal y cuales ruido?
     Todo será señal exceptuando mensajes ICMP de puerto inalcanzable, los mensajes ARP y algunos mensajes del NAT de binding request y binding response
 
@@ -59,22 +59,31 @@ qué segundos tienen lugar esos envı́os?
 
 5. Analiza las dos primeras tramas de la captura.
 * ¿Qué servicio es el utilizado en estas tramas?
+    Las cuatro primeras tramas pertenecen a DNS
 * ¿Cuál es la dirección IP del servidor de nombres del ordenador
 que ha lanzado Ekiga?
+    Es la 80.58.61.250
 * ¿Qué dirección IP (de ekiga.net) devuelve el servicio de nombres?
+    La 86.64.162.35
 
 6. A continuación, hay más de una docena de tramas TCP/HTTP.
 * ¿Podrı́as decir la URL que se está pidiendo?
+    Está pidiendo con GET: http://ekiga.net/ip/
 * ¿Qué user agent (UA) la está pidiendo?
+    El User Agent es Ekiga
 * ¿Qué devuelve el servidor?
+    La dirección IP 83.36.48.212
 * Si lanzamos el navegador web, por ejemplo, Mozilla Firefox, y
 vamos a la misma URL, ¿qué recibimos? ¿Qué es, entonces, lo
 que está respondiendo el servidor?
+    Recibimos la IP 37.35.207.92, que nuestra IP privada
 
 7. Hasta la trama 45 se puede observar una secuencia de tramas del
 protocolo STUN.
 * ¿Por qué se hace uso de este protocolo?
+    STUN(Session Traversal Utilities for NAT), protocolo de red cliente/servidor que permitirá a cliente NAT que puedan encontrar la dir. IP pública, la NAT donde se encuentra y el puerto de Internet asociado con el puerto local. Puede comprobar que tipo de NAT tenemos para comprobar si podemos realizar la conexión y que no actúe como un firewall.
 * ¿Podrı́as decir si estamos tras un NAT o no?
+    Claramente, si
 
 8. La trama 46 es la primera trama SIP. En un entorno como el de Internet, lo habitual es desconocer la dirección IP de la otra parte al
 realizar una llamada. Por eso, todo usuario registra su localización en
@@ -82,10 +91,14 @@ un servidor Registrar. El Registrar guarda información sobre los
 usuarios en un servidor de localización que puede ser utilizado para
 localizar usuarios.
 * ¿Qué dirección IP tiene el servidor Registrar?
+    El servidor registrar se tiene la dir. IP 86.64.162.35
 * ¿A qué puerto (del servidor Registrar) se envı́an los paquetes
 SIP?
+    Puerto destino del mensaje REGISTER lo vemos en la parte de UDP, que es el 5060, el puerto de origen por el que sale es el 5063
 * ¿Qué método SIP utiliza el UA para registrarse?
+    Método REGISTER, como ya hemos visto y comprobado
 * Además de REGISTER, ¿podrı́as decir qué instrucciones SIP entiende el UA?
+    Pues los demás métodos existentes en SIP, dado que el UA trabaja con este protocolo, estos métodos serán INVITE, ACK, OPTIONS, CANCEL, MESSAGE, BYE, etc
 [Al terminar el ejercicio es recomendable hacer commit de los ficheros modificados]
 
 9. Fijémonos en las tramas siguientes a la número 46:
