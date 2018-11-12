@@ -213,17 +213,26 @@ Ekiga para ver todo el proceso3 .
 19. Observa las diferencias en el inicio de la conversación entre el entorno
 del laboratorio y el del ejercicio anterior4 :
 * ¿Se utilizan DNS y STUN? ¿Por qué?
+    DNS si se utiliza y STUN también, debido a que estamos en un NAT
 * ¿Son diferentes el registro y la descripción de la sesión?
+    Si, el register se hace con protocolo SIP (iniciación de sesión), y sirve para registrar a un usuario para que entre en la sesión, y después se describe la sesión en un paquete SDP (descripción de sesión), que sirve para decir cómo va a ser la sesión
 
 20. Identifica las diferencias existentes entre esta conversación y la conversación anterior:
 * ¿Cuántos flujos tenemos?
+    En la captura realizada de música, tenemos un flujo de audio y otro de vídeo, y en la captura de inicio también, esto se ve en media description: audio 5086 rtp/avp y video 5088 rtp/avp (Dos SSRC en los paquetes RTP)
 * ¿Cuál es su periodicidad?
+    Se envía un paquete rtp de origen a destino (nosotros) cada 320ms
 * ¿Cuánto es el valor máximo del delta y los valores medios y
 máximo del jitter?
+    Es diferente segun los SSRC, que hay dos diferentes, son respectivamente:
+    Delta máxima 47.591ms y 35.932ms, los jitter máximos son 3.762 y 13.344, y los jitter medios 
+    son de 0.663 y 12.452
 * ¿Podrı́as reproducir la conversación desde Wireshark? ¿Cómo?
+    Desde VoIP, pulsando en la opción Play Stream y dándole al play
 Comprueba que poniendo un valor demasiado pequeño para el
 buffer de jitter, la conversación puede no tener la calidad necesaria.
 * ¿Sabrı́as decir qué tipo de servicio ofrece sip:500@ekiga.net?
+    Si, es un servicio de eco. Sirve para comprobar si el camino cliente-servidor que tenemos nosotros con ekiga.net esta disponible y que no hay problemas, enviamos un eco y nos debería dar un 200 OK si no hay ningún problema, en cuyo caso podríamos utilizar los demás servicios de ekiga en principio sin ningún problema.
 [Al terminar el ejercicio es recomendable hacer commit de los ficheros modificados]
 
 
